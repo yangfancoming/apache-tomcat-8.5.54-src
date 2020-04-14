@@ -31,36 +31,29 @@ public class VersionLoggerListener implements LifecycleListener {
     private boolean logEnv = false;
     private boolean logProps = false;
 
-
     public boolean getLogArgs() {
         return logArgs;
     }
-
 
     public void setLogArgs(boolean logArgs) {
         this.logArgs = logArgs;
     }
 
-
     public boolean getLogEnv() {
         return logEnv;
     }
-
 
     public void setLogEnv(boolean logEnv) {
         this.logEnv = logEnv;
     }
 
-
     public boolean getLogProps() {
         return logProps;
     }
 
-
     public void setLogProps(boolean logProps) {
         this.logProps = logProps;
     }
-
 
     @Override
     public void lifecycleEvent(LifecycleEvent event) {

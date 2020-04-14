@@ -14,6 +14,7 @@ import org.apache.tomcat.util.res.StringManager;
  * Output was generate with StoreAppenders.
  */
 public class StoreFactoryBase implements IStoreFactory {
+
     private static Log log = LogFactory.getLog(StoreFactoryBase.class);
 
     private StoreRegistry registry;
@@ -23,8 +24,7 @@ public class StoreFactoryBase implements IStoreFactory {
     /**
      * The string manager for this package.
      */
-    protected static final StringManager sm = StringManager
-            .getManager(Constants.Package);
+    protected static final StringManager sm = StringManager.getManager(Constants.Package);
 
     /**
      * The descriptive information string for this implementation.
@@ -49,8 +49,7 @@ public class StoreFactoryBase implements IStoreFactory {
     }
 
     /**
-     * @param storeAppender
-     *            The storeAppender to set.
+     * @param storeAppender The storeAppender to set.
      */
     @Override
     public void setStoreAppender(StoreAppender storeAppender) {
@@ -59,23 +58,19 @@ public class StoreFactoryBase implements IStoreFactory {
 
     /**
      * Set Registry
-     *
      * @see org.apache.catalina.storeconfig.IStoreFactory#setRegistry(org.apache.catalina.storeconfig.StoreRegistry)
      */
     @Override
     public void setRegistry(StoreRegistry aRegistry) {
         registry = aRegistry;
-
     }
 
     /**
      * get Registry
-     *
      * @see org.apache.catalina.storeconfig.IStoreFactory#getRegistry()
      */
     @Override
     public StoreRegistry getRegistry() {
-
         return registry;
     }
 
@@ -89,48 +84,38 @@ public class StoreFactoryBase implements IStoreFactory {
 
     /**
      * Store a server.xml element with attributes and children
-     *
-     * @see org.apache.catalina.storeconfig.IStoreFactory#store(java.io.PrintWriter,
-     *      int, java.lang.Object)
+     * @see org.apache.catalina.storeconfig.IStoreFactory#store(java.io.PrintWriter,int, java.lang.Object)
      */
     @Override
-    public void store(PrintWriter aWriter, int indent, Object aElement)
-            throws Exception {
-
-        StoreDescription elementDesc = getRegistry().findDescription(
-                aElement.getClass());
-
+    public void store(PrintWriter aWriter, int indent, Object aElement) throws Exception {
+        StoreDescription elementDesc = getRegistry().findDescription(aElement.getClass());
         if (elementDesc != null) {
-            if (log.isDebugEnabled())
-                log.debug(sm.getString("factory.storeTag",
-                        elementDesc.getTag(), aElement));
+            if (log.isDebugEnabled()) log.debug(sm.getString("factory.storeTag",elementDesc.getTag(), aElement));
             getStoreAppender().printIndent(aWriter, indent + 2);
             if (!elementDesc.isChildren()) {
-                getStoreAppender().printTag(aWriter, indent, aElement,
-                        elementDesc);
+                getStoreAppender().printTag(aWriter, indent, aElement,elementDesc);
             } else {
-                getStoreAppender().printOpenTag(aWriter, indent + 2, aElement,
-                        elementDesc);
+                getStoreAppender().printOpenTag(aWriter, indent + 2, aElement,elementDesc);
                 storeChildren(aWriter, indent + 2, aElement, elementDesc);
                 getStoreAppender().printIndent(aWriter, indent + 2);
                 getStoreAppender().printCloseTag(aWriter, elementDesc);
             }
-        } else
-            log.warn(sm.getString("factory.storeNoDescriptor", aElement
-                    .getClass()));
+        } else{
+            log.warn(sm.getString("factory.storeNoDescriptor", aElement.getClass()));
+        }
+
     }
 
     /**
      * Must Implement at subclass for custom store children handling.
-     *
      * @param aWriter Current output writer
      * @param indent Indentation level
      * @param aElement Current element
      * @param elementDesc The element description
      * @throws Exception Configuration storing error
      */
-    public void storeChildren(PrintWriter aWriter, int indent, Object aElement,
-            StoreDescription elementDesc) throws Exception {
+    public void storeChildren(PrintWriter aWriter, int indent, Object aElement,StoreDescription elementDesc) throws Exception {
+
     }
 
     /**
@@ -142,20 +127,15 @@ public class StoreFactoryBase implements IStoreFactory {
      * @param aTagElement Current element
      * @throws Exception Configuration storing error
      */
-    protected void storeElement(PrintWriter aWriter, int indent,
-            Object aTagElement) throws Exception {
+    protected void storeElement(PrintWriter aWriter, int indent,Object aTagElement) throws Exception {
         if (aTagElement != null) {
-            IStoreFactory elementFactory = getRegistry().findStoreFactory(
-                    aTagElement.getClass());
-
+            IStoreFactory elementFactory = getRegistry().findStoreFactory(aTagElement.getClass());
             if (elementFactory != null) {
-                StoreDescription desc = getRegistry().findDescription(
-                        aTagElement.getClass());
+                StoreDescription desc = getRegistry().findDescription(aTagElement.getClass());
                 if (!desc.isTransientChild(aTagElement.getClass().getName()))
                     elementFactory.store(aWriter, indent, aTagElement);
             } else {
-                log.warn(sm.getString("factory.storeNoDescriptor", aTagElement
-                        .getClass()));
+                log.warn(sm.getString("factory.storeNoDescriptor", aTagElement.getClass()));
             }
         }
     }
@@ -167,8 +147,7 @@ public class StoreFactoryBase implements IStoreFactory {
      * @param elements Array of elements
      * @throws Exception Configuration storing error
      */
-    protected void storeElementArray(PrintWriter aWriter, int indent,
-            Object[] elements) throws Exception {
+    protected void storeElementArray(PrintWriter aWriter, int indent,Object[] elements) throws Exception {
         if (elements != null) {
             for (int i = 0; i < elements.length; i++) {
                 try {
