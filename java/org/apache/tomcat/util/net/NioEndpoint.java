@@ -1,19 +1,4 @@
-/*
- *  Licensed to the Apache Software Foundation (ASF) under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
+
 package org.apache.tomcat.util.net;
 
 import java.io.EOFException;
@@ -57,26 +42,17 @@ import org.apache.tomcat.util.net.jsse.JSSESupport;
 
 /**
  * NIO tailored thread pool, providing the following services:
- * <ul>
  * <li>Socket acceptor thread</li>
  * <li>Socket poller thread</li>
  * <li>Worker threads pool</li>
- * </ul>
- *
  * When switching to Java 5, there's an opportunity to use the virtual
  * machine's thread pool.
- *
- * @author Mladen Turk
- * @author Remy Maucherat
  */
 public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
 
-
     // -------------------------------------------------------------- Constants
 
-
     private static final Log log = LogFactory.getLog(NioEndpoint.class);
-
 
     public static final int OP_REGISTER = 0x100; //register interest op
 
@@ -89,9 +65,6 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
      */
     private volatile ServerSocketChannel serverSock = null;
 
-    /**
-     *
-     */
     private volatile CountDownLatch stopLatch = null;
 
     /**
@@ -104,9 +77,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
      */
     private SynchronizedStack<NioChannel> nioChannels;
 
-
     // ------------------------------------------------------------- Properties
-
 
     /**
      * Generic properties, introspected
@@ -125,7 +96,6 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
             return false;
         }
     }
-
 
     /**
      * Use System.inheritableChannel to obtain channel from stdin/stdout.
@@ -159,14 +129,12 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
     private AtomicInteger pollerRotater = new AtomicInteger(0);
     /**
      * Return an available poller in true round robin fashion.
-     *
      * @return The next poller in sequence
      */
     public Poller getPoller0() {
         int idx = Math.abs(pollerRotater.incrementAndGet()) % pollers.length;
         return pollers[idx];
     }
-
 
     public void setSelectorPool(NioSelectorPool selectorPool) {
         this.selectorPool = selectorPool;
@@ -185,11 +153,9 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
         return false;
     }
 
-
     // --------------------------------------------------------- Public Methods
     /**
      * Number of keep-alive sockets.
-     *
      * @return The number of sockets currently in the keep-alive state waiting
      *         for the next request to be received on the socket
      */
@@ -204,7 +170,6 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
             return sum;
         }
     }
-
 
     // ----------------------------------------------- Public Lifecycle Methods
 
@@ -241,10 +206,8 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
             pollerThreadCount = 1;
         }
         setStopLatch(new CountDownLatch(pollerThreadCount));
-
         // Initialize SSL if needed
         initialiseSsl();
-
         selectorPool.open();
     }
 
@@ -253,25 +216,17 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
      */
     @Override
     public void startInternal() throws Exception {
-
         if (!running) {
             running = true;
             paused = false;
-
-            processorCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                    socketProperties.getProcessorCache());
-            eventCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                            socketProperties.getEventCache());
-            nioChannels = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                    socketProperties.getBufferPool());
-
+            processorCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,socketProperties.getProcessorCache());
+            eventCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,socketProperties.getEventCache());
+            nioChannels = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,socketProperties.getBufferPool());
             // Create worker collection
             if ( getExecutor() == null ) {
                 createExecutor();
             }
-
             initializeConnectionLatch();
-
             // Start poller threads
             pollers = new Poller[getPollerThreadCount()];
             for (int i=0; i<pollers.length; i++) {
@@ -281,11 +236,9 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
                 pollerThread.setDaemon(true);
                 pollerThread.start();
             }
-
             startAcceptorThreads();
         }
     }
-
 
     /**
      * Stop the endpoint. This will cause all processing threads to stop.
@@ -1563,14 +1516,10 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
                     }
                 }
             }
-
         }
-
     }
 
-
     // ---------------------------------------------- SocketProcessor Inner Class
-
     /**
      * This class is the equivalent of the Worker, but will simply use in an
      * external Executor thread pool.
@@ -1588,7 +1537,6 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
 
             try {
                 int handshake = -1;
-
                 try {
                     if (key != null) {
                         if (socket.isHandshakeComplete()) {

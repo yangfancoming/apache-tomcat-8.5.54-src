@@ -36,14 +36,10 @@ import org.apache.tomcat.util.threads.ThreadPoolExecutor;
 
 /**
  * @param <S> The type for the sockets managed by this endpoint.
- *
- * @author Mladen Turk
- * @author Remy Maucherat
  */
 public abstract class AbstractEndpoint<S> {
 
     // -------------------------------------------------------------- Constants
-
     protected static final StringManager sm = StringManager.getManager(AbstractEndpoint.class);
 
     public static interface Handler<S> {
@@ -56,7 +52,6 @@ public abstract class AbstractEndpoint<S> {
             //      ASYNC_END (if possible)
             OPEN, CLOSED, LONG, ASYNC_END, SENDFILE, UPGRADING, UPGRADED, SUSPENDED
         }
-
 
         /**
          * Process the provided socket with the given current status.
