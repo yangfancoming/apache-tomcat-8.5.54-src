@@ -834,29 +834,21 @@ public class Digester extends DefaultHandler2 {
      * @exception SAXException if no XMLReader can be instantiated
      */
     public XMLReader getXMLReader() throws SAXException {
-        if (reader == null) {
-            reader = getParser().getXMLReader();
-        }
-
+        if (reader == null)  reader = getParser().getXMLReader();
         reader.setDTDHandler(this);
         reader.setContentHandler(this);
-
         EntityResolver entityResolver = getEntityResolver();
         if (entityResolver == null) {
             entityResolver = this;
         }
-
         // Wrap the resolver so we can perform ${...} property replacement
         if (entityResolver instanceof EntityResolver2) {
             entityResolver = new EntityResolver2Wrapper((EntityResolver2) entityResolver, source, classLoader);
         } else {
             entityResolver = new EntityResolverWrapper(entityResolver, source, classLoader);
         }
-
         reader.setEntityResolver(entityResolver);
-
         reader.setProperty("http://xml.org/sax/properties/lexical-handler", this);
-
         reader.setErrorHandler(this);
         return reader;
     }
