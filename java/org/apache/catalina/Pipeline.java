@@ -17,9 +17,6 @@ import java.util.Set;
  * <code>setBasic()</code> method is provided to set the Valve instance that
  * will always be executed last.  Other Valves will be executed in the order
  * that they were added, before the basic Valve is executed.</p>
- *
- * @author Craig R. McClanahan
- * @author Peter Donald
  */
 public interface Pipeline {
 
@@ -29,7 +26,6 @@ public interface Pipeline {
      */
     public Valve getBasic();
 
-
     /**
      * <p>Set the Valve instance that has been distinguished as the basic
      * Valve for this Pipeline (if any).  Prior to setting the basic Valve,
@@ -37,13 +33,10 @@ public interface Pipeline {
      * implements <code>Contained</code>, with the owning Container as an
      * argument.  The method may throw an <code>IllegalArgumentException</code>
      * if this Valve chooses not to be associated with this Container, or
-     * <code>IllegalStateException</code> if it is already associated with
-     * a different Container.</p>
-     *
+     * <code>IllegalStateException</code> if it is already associated with a different Container.</p>
      * @param valve Valve to be distinguished as the basic Valve
      */
     public void setBasic(Valve valve);
-
 
     /**
      * <p>Add a new Valve to the end of the pipeline associated with this
@@ -84,15 +77,12 @@ public interface Pipeline {
      * Container, if it is found; otherwise, do nothing.  If the Valve is
      * found and removed, the Valve's <code>setContainer(null)</code> method
      * will be called if it implements <code>Contained</code>.
-     *
      * <p>Implementation note: Implementations are expected to trigger the
      * {@link Container#REMOVE_VALVE_EVENT} for the associated container if this
      * call is successful.</p>
-     *
      * @param valve Valve to be removed
      */
     public void removeValve(Valve valve);
-
 
     /**
      * @return the Valve instance that has been distinguished as the basic
@@ -100,13 +90,11 @@ public interface Pipeline {
      */
     public Valve getFirst();
 
-
     /**
      * Returns true if all the valves in this pipeline support async, false otherwise
      * @return true if all the valves in this pipeline support async, false otherwise
      */
     public boolean isAsyncSupported();
-
 
     /**
      * @return the Container with which this Pipeline is associated.
@@ -116,19 +104,15 @@ public interface Pipeline {
 
     /**
      * Set the Container with which this Pipeline is associated.
-     *
      * @param container The new associated container
      */
     public void setContainer(Container container);
 
 
     /**
-     * Identifies the Valves, if any, in this Pipeline that do not support
-     * async.
-     *
+     * Identifies the Valves, if any, in this Pipeline that do not support async.
      * @param result The Set to which the fully qualified class names of each
-     *               Valve in this Pipeline that does not support async will be
-     *               added
+     *               Valve in this Pipeline that does not support async will be added
      */
     public void findNonAsyncValves(Set<String> result);
 }

@@ -13,13 +13,10 @@ import org.apache.catalina.mapper.Mapper;
  * A given JVM can contain any number of Service instances; however, they are
  * completely independent of each other and share only the basic JVM facilities
  * and classes on the system class path.
- *
- * @author Craig R. McClanahan
  */
 public interface Service extends Lifecycle {
 
     // ------------------------------------------------------------- Properties
-
     /**
      * @return the <code>Engine</code> that handles requests for all
      * <code>Connectors</code> associated with this Service.
@@ -29,7 +26,6 @@ public interface Service extends Lifecycle {
     /**
      * Set the <code>Engine</code> that handles requests for all
      * <code>Connectors</code> associated with this Service.
-     *
      * @param engine The new Engine
      */
     public void setContainer(Engine engine);
@@ -41,7 +37,6 @@ public interface Service extends Lifecycle {
 
     /**
      * Set the name of this Service.
-     *
      * @param name The new service name
      */
     public void setName(String name);
@@ -53,7 +48,6 @@ public interface Service extends Lifecycle {
 
     /**
      * Set the <code>Server</code> with which we are associated (if any).
-     *
      * @param server The server that owns this Service
      */
     public void setServer(Server server);
@@ -67,7 +61,6 @@ public interface Service extends Lifecycle {
 
     /**
      * Set the parent class loader for this service.
-     *
      * @param parent The new parent class loader
      */
     public void setParentClassLoader(ClassLoader parent);
@@ -84,14 +77,12 @@ public interface Service extends Lifecycle {
     /**
      * Add a new Connector to the set of defined Connectors, and associate it
      * with this Service's Container.
-     *
      * @param connector The Connector to be added
      */
     public void addConnector(Connector connector);
 
     /**
      * Find and return the set of Connectors associated with this Service.
-     *
      * @return the set of associated Connectors
      */
     public Connector[] findConnectors();

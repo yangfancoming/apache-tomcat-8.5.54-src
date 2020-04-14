@@ -56,23 +56,16 @@ import org.apache.juli.logging.Log;
  * <li><b>Resources</b> - JNDI directory context enabling access to static
  *     resources, enabling custom linkages to existing server components when
  *     Catalina is embedded in a larger server.
- * </ul>
- *
- * @author Craig R. McClanahan
- * @author Remy Maucherat
+
  */
 public interface Container extends Lifecycle {
 
-
     // ----------------------------------------------------- Manifest Constants
-
-
     /**
      * The ContainerEvent event type sent when a child container is added
      * by <code>addChild()</code>.
      */
     public static final String ADD_CHILD_EVENT = "addChild";
-
 
     /**
      * The ContainerEvent event type sent when a valve is added
@@ -80,20 +73,17 @@ public interface Container extends Lifecycle {
      */
     public static final String ADD_VALVE_EVENT = "addValve";
 
-
     /**
      * The ContainerEvent event type sent when a child container is removed
      * by <code>removeChild()</code>.
      */
     public static final String REMOVE_CHILD_EVENT = "removeChild";
 
-
     /**
      * The ContainerEvent event type sent when a valve is removed
      * by <code>removeValve()</code>, if this Container supports pipelines.
      */
     public static final String REMOVE_VALVE_EVENT = "removeValve";
-
 
     // ------------------------------------------------------------- Properties
 
@@ -106,13 +96,11 @@ public interface Container extends Lifecycle {
      */
     public Log getLogger();
 
-
     /**
      * Return the logger name that the container will use.
      * @return the abbreviated name of this container for logging messages
      */
     public String getLogName();
-
 
     /**
      * Obtain the JMX name for this container.
@@ -121,34 +109,24 @@ public interface Container extends Lifecycle {
      */
     public ObjectName getObjectName();
 
-
     /**
-     * Obtain the JMX domain under which this container will be / has been
-     * registered.
-     *
+     * Obtain the JMX domain under which this container will be / has been registered.
      * @return The JMX domain name
      */
     public String getDomain();
 
-
     /**
      * Calculate the key properties string to be added to an object's
      * {@link ObjectName} to indicate that it is associated with this container.
-     *
      * @return          A string suitable for appending to the ObjectName
-     *
      */
     public String getMBeanKeyProperties();
 
-
     /**
-     * Return the Pipeline object that manages the Valves associated with
-     * this Container.
-     *
+     * Return the Pipeline object that manages the Valves associated with this Container.
      * @return The Pipeline
      */
     public Pipeline getPipeline();
-
 
     /**
      * Get the Cluster for this container.
@@ -315,7 +293,6 @@ public interface Container extends Lifecycle {
 
     /**
      * Add a container event listener to this component.
-     *
      * @param listener The listener to add
      */
     public void addContainerListener(ContainerListener listener);
@@ -331,11 +308,8 @@ public interface Container extends Lifecycle {
 
     /**
      * Obtain a child Container by name.
-     *
      * @param name Name of the child Container to be retrieved
-     *
-     * @return The child Container with the given name or <code>null</code> if
-     *         no such child exists.
+     * @return The child Container with the given name or <code>null</code> if no such child exists.
      */
     public Container findChild(String name);
 
@@ -360,25 +334,19 @@ public interface Container extends Lifecycle {
 
 
     /**
-     * Remove an existing child Container from association with this parent
-     * Container.
-     *
+     * Remove an existing child Container from association with this parent Container.
      * @param child Existing child Container to be removed
      */
     public void removeChild(Container child);
 
-
     /**
      * Remove a container event listener from this component.
-     *
      * @param listener The listener to remove
      */
     public void removeContainerListener(ContainerListener listener);
 
-
     /**
      * Remove a property change listener from this component.
-     *
      * @param listener The listener to remove
      */
     public void removePropertyChangeListener(PropertyChangeListener listener);
@@ -406,9 +374,7 @@ public interface Container extends Lifecycle {
      * @param   useDefault  Flag that indicates that the request/response should
      *                      be logged in the engine's default access log
      */
-    public void logAccess(Request request, Response response, long time,
-            boolean useDefault);
-
+    public void logAccess(Request request, Response response, long time,boolean useDefault);
 
     /**
      * Obtain the AccessLog to use to log a request/response that is destined
@@ -421,7 +387,6 @@ public interface Container extends Lifecycle {
      */
     public AccessLog getAccessLog();
 
-
     /**
      * Obtain the number of threads available for starting and stopping any
      * children associated with this container. This allows start/stop calls to
@@ -432,7 +397,6 @@ public interface Container extends Lifecycle {
      */
     public int getStartStopThreads();
 
-
     /**
      * Sets the number of threads available for starting and stopping any
      * children associated with this container. This allows start/stop calls to
@@ -441,18 +405,14 @@ public interface Container extends Lifecycle {
      */
     public void setStartStopThreads(int startStopThreads);
 
-
     /**
      * Obtain the location of CATALINA_BASE.
-     *
      * @return  The location of CATALINA_BASE.
      */
     public File getCatalinaBase();
 
-
     /**
      * Obtain the location of CATALINA_HOME.
-     *
      * @return The location of CATALINA_HOME.
      */
     public File getCatalinaHome();
