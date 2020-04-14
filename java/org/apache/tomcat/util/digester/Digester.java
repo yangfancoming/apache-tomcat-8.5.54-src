@@ -1093,9 +1093,7 @@ public class Digester extends DefaultHandler2 {
      * @return the Locator supplied by the document parser
      */
     public Locator getDocumentLocator() {
-
         return locator;
-
     }
 
     /**
@@ -1105,13 +1103,10 @@ public class Digester extends DefaultHandler2 {
      */
     @Override
     public void setDocumentLocator(Locator locator) {
-
         if (saxLog.isDebugEnabled()) {
             saxLog.debug("setDocumentLocator(" + locator + ")");
         }
-
         this.locator = locator;
-
     }
 
 
@@ -1142,11 +1137,9 @@ public class Digester extends DefaultHandler2 {
     @SuppressWarnings("deprecation")
     @Override
     public void startDocument() throws SAXException {
-
         if (saxLog.isDebugEnabled()) {
             saxLog.debug("startDocument()");
         }
-
         if (locator instanceof Locator2) {
             if (root instanceof DocumentProperties.Charset) {
                 String enc = ((Locator2) locator).getEncoding();

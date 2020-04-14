@@ -19,4 +19,6 @@ Import-Package:
   javax.naming;version="0",
   javax.naming.spi;version="0",
   javax.sql;version="0",
-  org.apache.juli.logging;version="0"
+  org.apache.juli.logging;version="0",
+ javax.xml.parsers,
+ org.xml.sax
