@@ -19,10 +19,7 @@ public class LimitLatch {
 
     private class Sync extends AbstractQueuedSynchronizer {
         private static final long serialVersionUID = 1L;
-
-        public Sync() {
-        }
-
+        public Sync() {}
         @Override
         protected int tryAcquireShared(int ignored) {
             long newCount = count.incrementAndGet();
@@ -43,7 +40,9 @@ public class LimitLatch {
     }
 
     private final Sync sync;
+    // 当前连接数
     private final AtomicLong count;
+    // 最大连接数
     private volatile long limit;
     private volatile boolean released = false;
 
@@ -82,23 +81,19 @@ public class LimitLatch {
      * the new limit. If the limit is increased, threads currently in the queue
      * may not be issued one of the newly available shares until the next
      * request is made for a latch.
-     *
      * @param limit The new limit
      */
     public void setLimit(long limit) {
         this.limit = limit;
     }
 
-
     /**
-     * Acquires a shared latch if one is available or waits for one if no shared
-     * latch is current available.
+     * 判断是否能获取连接。
+     * Acquires a shared latch if one is available or waits for one if no shared latch is current available.
      * @throws InterruptedException If the current thread is interrupted
      */
     public void countUpOrAwait() throws InterruptedException {
-        if (log.isDebugEnabled()) {
-            log.debug("Counting up["+Thread.currentThread().getName()+"] latch="+getCount());
-        }
+        if (log.isDebugEnabled()) log.debug("Counting up["+Thread.currentThread().getName()+"] latch="+getCount());
         sync.acquireSharedInterruptibly(1);
     }
 
@@ -109,9 +104,7 @@ public class LimitLatch {
     public long countDown() {
         sync.releaseShared(0);
         long result = getCount();
-        if (log.isDebugEnabled()) {
-            log.debug("Counting down["+Thread.currentThread().getName()+"] latch="+result);
-        }
+        if (log.isDebugEnabled()) log.debug("Counting down["+Thread.currentThread().getName()+"] latch="+result);
         return result;
     }
 

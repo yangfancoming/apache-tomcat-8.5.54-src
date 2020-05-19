@@ -434,7 +434,6 @@ public final class Bootstrap {
         return catalinaHomeFile.getPath();
     }
 
-
     /**
      * Obtain the name of the configured base (instance) directory. Note that
      * home and base may be the same (and are by default). If this is not set

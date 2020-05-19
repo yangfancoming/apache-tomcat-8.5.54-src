@@ -11,18 +11,12 @@ import org.junit.Test;
 
 public class TestParameters {
 
-    private static final Parameter SIMPLE =
-        new Parameter("foo1", "bar1");
-    private static final Parameter SIMPLE_MULTIPLE =
-        new Parameter("foo2", "bar1", "bar2", "hello world", "?%@");
-    private static final Parameter NO_VALUE =
-        new Parameter("foo3");
-    private static final Parameter EMPTY_VALUE =
-        new Parameter("foo4", "");
-    private static final Parameter EMPTY =
-        new Parameter("");
-    private static final Parameter UTF8 =
-            new Parameter("\ufb6b\ufb6a\ufb72", "\uffee\uffeb\uffe2");
+    private static final Parameter SIMPLE =  new Parameter("foo1", "bar1");
+    private static final Parameter SIMPLE_MULTIPLE = new Parameter("foo2", "bar1", "bar2", "hello world", "?%@");
+    private static final Parameter NO_VALUE =  new Parameter("foo3");
+    private static final Parameter EMPTY_VALUE = new Parameter("foo4", "");
+    private static final Parameter EMPTY = new Parameter("");
+    private static final Parameter UTF8 =  new Parameter("\ufb6b\ufb6a\ufb72", "\uffee\uffeb\uffe2");
 
     @Test
     public void testProcessParametersByteArrayIntInt() {
@@ -32,8 +26,8 @@ public class TestParameters {
         doTestProcessParametersByteArrayIntInt(-1, EMPTY_VALUE);
         doTestProcessParametersByteArrayIntInt(-1, EMPTY);
         doTestProcessParametersByteArrayIntInt(-1, UTF8);
-        doTestProcessParametersByteArrayIntInt(-1,
-                SIMPLE, SIMPLE_MULTIPLE, NO_VALUE, EMPTY_VALUE, EMPTY, UTF8);
+        doTestProcessParametersByteArrayIntInt(-1,SIMPLE, SIMPLE_MULTIPLE, NO_VALUE, EMPTY_VALUE, EMPTY, UTF8);
+
         doTestProcessParametersByteArrayIntInt(-1,
                 SIMPLE_MULTIPLE, NO_VALUE, EMPTY_VALUE, EMPTY, UTF8, SIMPLE);
         doTestProcessParametersByteArrayIntInt(-1,
@@ -67,9 +61,7 @@ public class TestParameters {
         Assert.assertEquals("foo4=", EMPTY_VALUE.toString());
     }
 
-    private long doTestProcessParametersByteArrayIntInt(int limit,
-            Parameter... parameters) {
-
+    private long doTestProcessParametersByteArrayIntInt(int limit, Parameter... parameters) {
         // Build the byte array
         StringBuilder input = new StringBuilder();
         boolean first = true;
@@ -105,17 +97,13 @@ public class TestParameters {
     @Test
     public void testNonExistantParameter() {
         Parameters p = new Parameters();
-
         String value = p.getParameter("foo");
         Assert.assertNull(value);
-
         Enumeration<String> names = p.getParameterNames();
         Assert.assertFalse(names.hasMoreElements());
-
         String[] values = p.getParameterValues("foo");
         Assert.assertNull(values);
     }
-
 
     @Test
     public void testAddParameters() {

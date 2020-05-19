@@ -269,7 +269,7 @@ public class Tomcat {
         URLConnection uConn = source.openConnection();
 
         try (InputStream is = uConn.getInputStream();
-                OutputStream os = new FileOutputStream(targetWar)) {
+             OutputStream os = new FileOutputStream(targetWar)) {
             IOTools.flow(is, os);
         }
 
@@ -305,15 +305,11 @@ public class Tomcat {
      *  ctx.addMimeMapping("ext", "type");
      * }</pre>
      *
-     *
-     * <p>
      * Note: If you reload the Context, all your configuration will be lost. If
      * you need reload support, consider using a LifecycleListener to provide
      * your configuration.
      *
-     * <p>
      * TODO: add the rest
-     *
      * @param contextPath The context mapping to use, "" for root context.
      * @param docBase Base directory for the context, for static files.
      *  Must exist, relative to the server home
@@ -342,9 +338,7 @@ public class Tomcat {
      * @param servletClass  The class to be used for the Servlet
      * @return The wrapper for the servlet
      */
-    public Wrapper addServlet(String contextPath,
-            String servletName,
-            String servletClass) {
+    public Wrapper addServlet(String contextPath,String servletName,String servletClass) {
         Container ctx = getHost().findChild(contextPath);
         return addServlet((Context) ctx, servletName, servletClass);
     }
@@ -356,15 +350,12 @@ public class Tomcat {
      * @param servletClass  The class to be used for the Servlet
      * @return The wrapper for the servlet
      */
-    public static Wrapper addServlet(Context ctx,
-                                      String servletName,
-                                      String servletClass) {
+    public static Wrapper addServlet(Context ctx,String servletName,String servletClass) {
         // will do class for name and set init params
         Wrapper sw = ctx.createWrapper();
         sw.setServletClass(servletClass);
         sw.setName(servletName);
         ctx.addChild(sw);
-
         return sw;
     }
 
@@ -376,9 +367,7 @@ public class Tomcat {
      * @param servlet       The Servlet to add
      * @return The wrapper for the servlet
      */
-    public Wrapper addServlet(String contextPath,
-            String servletName,
-            Servlet servlet) {
+    public Wrapper addServlet(String contextPath,String servletName,Servlet servlet) {
         Container ctx = getHost().findChild(contextPath);
         return addServlet((Context) ctx, servletName, servlet);
     }
@@ -390,9 +379,7 @@ public class Tomcat {
      * @param servlet       The Servlet to add
      * @return The wrapper for the servlet
      */
-    public static Wrapper addServlet(Context ctx,
-                                      String servletName,
-                                      Servlet servlet) {
+    public static Wrapper addServlet(Context ctx,String servletName,Servlet servlet) {
         // will do class for name and set init params
         Wrapper sw = new ExistingStandardWrapper(servlet);
         sw.setName(servletName);
@@ -401,10 +388,8 @@ public class Tomcat {
         return sw;
     }
 
-
     /**
      * Initialize the server.
-     *
      * @throws LifecycleException Init error
      */
     public void init() throws LifecycleException {
@@ -427,7 +412,6 @@ public class Tomcat {
 
     /**
      * Stop the server.
-     *
      * @throws LifecycleException Stop error
      */
     public void stop() throws LifecycleException {
@@ -439,7 +423,6 @@ public class Tomcat {
     /**
      * Destroy the server. This object cannot be used once this method has been
      * called.
-     *
      * @throws LifecycleException Destroy error
      */
     public void destroy() throws LifecycleException {
@@ -624,8 +607,7 @@ public class Tomcat {
      * @return the deployed context
      * @see #addContext(String, String)
      */
-    public Context addContext(Host host, String contextPath, String contextName,
-            String dir) {
+    public Context addContext(Host host, String contextPath, String contextName,String dir) {
         silence(host, contextName);
         Context ctx = createContext(host, contextPath);
         ctx.setName(contextName);
@@ -715,7 +697,7 @@ public class Tomcat {
      * @return the deployed context
      */
     public Context addWebapp(Host host, String contextPath, String docBase,
-            LifecycleListener config) {
+                             LifecycleListener config) {
 
         silence(host, contextPath);
 
@@ -866,12 +848,12 @@ public class Tomcat {
     }
 
     static final String[] silences = new String[] {
-        "org.apache.coyote.http11.Http11NioProtocol",
-        "org.apache.catalina.core.StandardService",
-        "org.apache.catalina.core.StandardEngine",
-        "org.apache.catalina.startup.ContextConfig",
-        "org.apache.catalina.core.ApplicationContext",
-        "org.apache.catalina.core.AprLifecycleListener"
+            "org.apache.coyote.http11.Http11NioProtocol",
+            "org.apache.catalina.core.StandardService",
+            "org.apache.catalina.core.StandardEngine",
+            "org.apache.catalina.startup.ContextConfig",
+            "org.apache.catalina.core.ApplicationContext",
+            "org.apache.catalina.core.AprLifecycleListener"
     };
 
     private boolean silent = false;
@@ -959,12 +941,10 @@ public class Tomcat {
      * Create the configured {@link Context} for the given <code>host</code>.
      * The default constructor of the class that was configured with
      * {@link StandardHost#setContextClass(String)} will be used
-     *
      * @param host
      *            host for which the {@link Context} should be created, or
      *            <code>null</code> if default host should be used
-     * @param url
-     *            path of the webapp which should get the {@link Context}
+     * @param url path of the webapp which should get the {@link Context}
      * @return newly created {@link Context}
      */
     private Context createContext(Host host, String url) {
@@ -982,10 +962,7 @@ public class Tomcat {
                 | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException
                 | ClassNotFoundException e) {
-            throw new IllegalArgumentException(
-                    "Can't instantiate context-class " + contextClass
-                            + " for host " + host + " and url "
-                            + url, e);
+            throw new IllegalArgumentException("Can't instantiate context-class " + contextClass+ " for host " + host + " and url "+ url, e);
         }
     }
 
@@ -993,19 +970,15 @@ public class Tomcat {
      * Enables JNDI naming which is disabled by default. Server must implement
      * {@link Lifecycle} in order for the {@link NamingContextListener} to be
      * used.
-     *
      */
     public void enableNaming() {
         // Make sure getServer() has been called as that is where naming is
         // disabled
         getServer();
         server.addLifecycleListener(new NamingContextListener());
-
         System.setProperty("catalina.useNaming", "true");
-
         String value = "org.apache.naming";
-        String oldValue =
-            System.getProperty(javax.naming.Context.URL_PKG_PREFIXES);
+        String oldValue = System.getProperty(javax.naming.Context.URL_PKG_PREFIXES);
         if (oldValue != null) {
             if (oldValue.contains(value)) {
                 value = oldValue;
@@ -1014,13 +987,9 @@ public class Tomcat {
             }
         }
         System.setProperty(javax.naming.Context.URL_PKG_PREFIXES, value);
-
-        value = System.getProperty
-            (javax.naming.Context.INITIAL_CONTEXT_FACTORY);
+        value = System.getProperty(javax.naming.Context.INITIAL_CONTEXT_FACTORY);
         if (value == null) {
-            System.setProperty
-                (javax.naming.Context.INITIAL_CONTEXT_FACTORY,
-                 "org.apache.naming.java.javaURLContextFactory");
+            System.setProperty(javax.naming.Context.INITIAL_CONTEXT_FACTORY,"org.apache.naming.java.javaURLContextFactory");
         }
     }
 
@@ -1029,16 +998,12 @@ public class Tomcat {
      * Provide default configuration for a context. This is broadly the
      * programmatic equivalent of the default web.xml and provides the following
      * features:
-     * <ul>
      * <li>Default servlet mapped to "/"</li>
      * <li>JSP servlet mapped to "*.jsp" and ""*.jspx"</li>
      * <li>Session timeout of 30 minutes</li>
      * <li>MIME mappings (subset of those in conf/web.xml)</li>
      * <li>Welcome files</li>
-     * </ul>
-     * TODO: Align the MIME mappings with conf/web.xml - possibly via a common
-     *       file.
-     *
+     * TODO: Align the MIME mappings with conf/web.xml - possibly via a common file.
      * @param contextPath   The path of the context to set the defaults for
      */
     public void initWebappDefaults(String contextPath) {
@@ -1046,10 +1011,8 @@ public class Tomcat {
         initWebappDefaults((Context) ctx);
     }
 
-
     /**
      * Static version of {@link #initWebappDefaults(String)}.
-     *
      * @param ctx   The context to set the defaults for
      */
     public static void initWebappDefaults(Context ctx) {
@@ -1060,8 +1023,7 @@ public class Tomcat {
         servlet.setOverridable(true);
 
         // JSP servlet (by class name - to avoid loading all deps)
-        servlet = addServlet(
-                ctx, "jsp", "org.apache.jasper.servlet.JspServlet");
+        servlet = addServlet(ctx, "jsp", "org.apache.jasper.servlet.JspServlet");
         servlet.addInitParameter("fork", "false");
         servlet.setLoadOnStartup(3);
         servlet.setOverridable(true);
@@ -1231,8 +1193,7 @@ public class Tomcat {
             try {
                 result = webAppContextXml.toURI().toURL();
             } catch (MalformedURLException e) {
-                Logger.getLogger(getLoggerName(getHost(), contextName)).log(Level.WARNING,
-                        "Unable to determine web application context.xml " + docBase, e);
+                Logger.getLogger(getLoggerName(getHost(), contextName)).log(Level.WARNING,"Unable to determine web application context.xml " + docBase, e);
             }
         }
         return result;
@@ -1246,8 +1207,7 @@ public class Tomcat {
                 result = UriUtil.buildJarUrl(docBase, Constants.ApplicationContextXml);
             }
         } catch (IOException e) {
-            Logger.getLogger(getLoggerName(getHost(), contextName)).log(Level.WARNING,
-                    "Unable to determine web application context.xml " + docBase, e);
+            Logger.getLogger(getLoggerName(getHost(), contextName)).log(Level.WARNING,"Unable to determine web application context.xml " + docBase, e);
         }
         return result;
     }

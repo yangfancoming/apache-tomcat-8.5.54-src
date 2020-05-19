@@ -112,12 +112,8 @@ import org.xml.sax.ext.EntityResolver2;
  *       &lt;url-pattern&gt;/static/*&lt;/url-pattern&gt;
  *   &lt;/servlet-mapping&gt;
  * </pre>
- * <p>
  * Then a request to <code>/context/static/images/tomcat.jpg</code> will succeed
  * while a request to <code>/context/images/tomcat2.jpg</code> will fail.
- * </p>
- * @author Craig R. McClanahan
- * @author Remy Maucherat
  */
 public class DefaultServlet extends HttpServlet {
 

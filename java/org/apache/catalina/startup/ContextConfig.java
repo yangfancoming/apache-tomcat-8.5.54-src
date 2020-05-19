@@ -109,12 +109,10 @@ public class ContextConfig implements LifecycleListener {
     /**
      * The string resources for this package.
      */
-    protected static final StringManager sm =
-        StringManager.getManager(Constants.Package);
+    protected static final StringManager sm = StringManager.getManager(Constants.Package);
 
 
-    protected static final LoginConfig DUMMY_LOGIN_CONFIG =
-        new LoginConfig("NONE", null, null, null);
+    protected static final LoginConfig DUMMY_LOGIN_CONFIG =  new LoginConfig("NONE", null, null, null);
 
 
     /**
@@ -1496,8 +1494,7 @@ public class ContextConfig implements LifecycleListener {
             }
         }
 
-        if (entry != null && entry.getGlobalTimeStamp() == globalTimeStamp &&
-                entry.getHostTimeStamp() == hostTimeStamp) {
+        if (entry != null && entry.getGlobalTimeStamp() == globalTimeStamp && entry.getHostTimeStamp() == hostTimeStamp) {
             InputSourceUtil.close(globalWebXml);
             InputSourceUtil.close(hostWebXml);
             return entry.getWebXml();
@@ -1528,8 +1525,7 @@ public class ContextConfig implements LifecycleListener {
                 // This is unusual enough to log
                 log.info(sm.getString("contextConfig.defaultMissing"));
             } else {
-                if (!webXmlParser.parseWebXml(
-                        globalWebXml, webXmlDefaultFragment, false)) {
+                if (!webXmlParser.parseWebXml( globalWebXml, webXmlDefaultFragment, false)) {
                     ok = false;
                 }
             }
@@ -1714,10 +1710,8 @@ public class ContextConfig implements LifecycleListener {
         }
     }
 
-
     /**
-     * Identify the default web.xml to be used and obtain an input source for
-     * it.
+     * Identify the default web.xml to be used and obtain an input source for it.
      * @return an input source to the default web.xml
      */
     protected InputSource getGlobalWebXmlSource() {
@@ -1729,13 +1723,11 @@ public class ContextConfig implements LifecycleListener {
         if (defaultWebXml == null) {
             getDefaultWebXml();
         }
-
         // Is it explicitly suppressed, e.g. in embedded environment?
         if (Constants.NoDefaultWebXml.equals(defaultWebXml)) {
             return null;
         }
-        return getWebXmlSource(defaultWebXml,
-                context.getCatalinaBase().getPath());
+        return getWebXmlSource(defaultWebXml,context.getCatalinaBase().getPath());
     }
 
 

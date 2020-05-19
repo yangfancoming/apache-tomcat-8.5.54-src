@@ -21,10 +21,7 @@ import org.apache.tomcat.util.buf.UDecoder;
 import org.apache.tomcat.util.log.UserDataHelper;
 import org.apache.tomcat.util.res.StringManager;
 
-/**
- *
- * @author Costin Manolache
- */
+
 public final class Parameters {
 
     private static final Log log = LogFactory.getLog(Parameters.class);
@@ -33,11 +30,10 @@ public final class Parameters {
 
     private static final UserDataHelper maxParamCountLog = new UserDataHelper(log);
 
-    private static final StringManager sm =
-        StringManager.getManager("org.apache.tomcat.util.http");
+    private static final StringManager sm = StringManager.getManager("org.apache.tomcat.util.http");
 
-    private final Map<String,ArrayList<String>> paramHashValues =
-            new LinkedHashMap<>();
+    private final Map<String,ArrayList<String>> paramHashValues = new LinkedHashMap<>();
+
     private boolean didQueryParameters=false;
 
     private MessageBytes queryMB;
@@ -71,7 +67,6 @@ public final class Parameters {
 
     /**
      * @return The current encoding
-     *
      * @deprecated This method will be removed in Tomcat 9.0.x
      */
     @Deprecated
@@ -85,7 +80,6 @@ public final class Parameters {
 
     /**
      * @param s The new encoding
-     *
      * @deprecated This method will be removed in Tomcat 9.0.x
      */
     @Deprecated
@@ -98,14 +92,11 @@ public final class Parameters {
             charset = DEFAULT_BODY_CHARSET;
         }
         this.charset = charset;
-        if(log.isDebugEnabled()) {
-            log.debug("Set encoding to " + charset.name());
-        }
+        if(log.isDebugEnabled()) log.debug("Set encoding to " + charset.name());
     }
 
     /**
      * @param s The new query string encoding
-     *
      * @deprecated This method will be removed in Tomcat 9
      */
     @Deprecated
@@ -118,29 +109,24 @@ public final class Parameters {
             queryStringCharset = DEFAULT_URI_CHARSET;
         }
         this.queryStringCharset = queryStringCharset;
-
         if(log.isDebugEnabled()) {
             log.debug("Set query string encoding to " + queryStringCharset.name());
         }
     }
 
-
     public boolean isParseFailed() {
         return parseFailedReason != null;
     }
 
-
     public FailReason getParseFailedReason() {
         return parseFailedReason;
     }
-
 
     public void setParseFailedReason(FailReason failReason) {
         if (this.parseFailedReason == null) {
             this.parseFailedReason = failReason;
         }
     }
-
 
     public void recycle() {
         parameterCount = 0;
@@ -151,7 +137,6 @@ public final class Parameters {
         parseFailedReason = null;
     }
 
-
     // -------------------- Data access --------------------
     // Access to the current name/values, no side effect ( processing ).
     // You must explicitly call handleQueryParameters and the post methods.
@@ -160,9 +145,7 @@ public final class Parameters {
         handleQueryParameters();
         // no "facade"
         ArrayList<String> values = paramHashValues.get(name);
-        if (values == null) {
-            return null;
-        }
+        if (values == null)  return null;
         return values.toArray(new String[values.size()]);
     }
 

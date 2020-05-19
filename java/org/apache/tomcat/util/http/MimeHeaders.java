@@ -66,12 +66,6 @@ import org.apache.tomcat.util.res.StringManager;
  *  XXX remove unused methods
  *  XXX External enumerations, with 0 GC.
  *  XXX use HeaderName ID
- *
- *
- * @author dac@eng.sun.com
- * @author James Todd [gonzo@eng.sun.com]
- * @author Costin Manolache
- * @author kevin seguin
  */
 public class MimeHeaders {
     /** Initial size - should be == average number of headers per request
@@ -79,8 +73,7 @@ public class MimeHeaders {
      */
     public static final int DEFAULT_HEADER_SIZE=8;
 
-    private static final StringManager sm =
-            StringManager.getManager("org.apache.tomcat.util.http");
+    private static final StringManager sm = StringManager.getManager("org.apache.tomcat.util.http");
 
     /**
      * The header fields.
@@ -166,7 +159,6 @@ public class MimeHeaders {
             mhf.getValue().duplicate(source.getValue(i));
         }
     }
-
 
     // -------------------- Idx access to headers ----------
 

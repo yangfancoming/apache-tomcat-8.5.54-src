@@ -112,7 +112,6 @@ public abstract class AbstractEndpoint<S> {
         public enum AcceptorState {
             NEW, RUNNING, PAUSED, ENDED
         }
-
         protected volatile AcceptorState state = AcceptorState.NEW;
         public final AcceptorState getState() {
             return state;
@@ -255,20 +254,14 @@ public abstract class AbstractEndpoint<S> {
     /**
      * Removes the SSL host configuration for the given host name, if such a
      * configuration exists.
-     *
-     * @param hostName  The host name associated with the SSL host configuration
-     *                  to remove
-     *
+     * @param hostName  The host name associated with the SSL host configuration to remove
      * @return  The SSL host configuration that was removed, if any
      */
     public SSLHostConfig removeSslHostConfig(String hostName) {
-        if (hostName == null) {
-            return null;
-        }
+        if (hostName == null)  return null;
         // Host names are case insensitive
         if (hostName.equalsIgnoreCase(getDefaultSSLHostConfigName())) {
-            throw new IllegalArgumentException(
-                    sm.getString("endpoint.removeDefaultSslHostConfig", hostName));
+            throw new IllegalArgumentException(sm.getString("endpoint.removeDefaultSslHostConfig", hostName));
         }
         SSLHostConfig sslHostConfig = sslHostConfigs.remove(hostName);
         unregisterJmx(sslHostConfig);
@@ -285,8 +278,7 @@ public abstract class AbstractEndpoint<S> {
     public void reloadSslHostConfig(String hostName) {
         SSLHostConfig sslHostConfig = sslHostConfigs.get(hostName);
         if (sslHostConfig == null) {
-            throw new IllegalArgumentException(
-                    sm.getString("endpoint.unknownSslHostName", hostName));
+            throw new IllegalArgumentException(sm.getString("endpoint.unknownSslHostName", hostName));
         }
         addSslHostConfig(sslHostConfig, true);
     }
@@ -306,14 +298,10 @@ public abstract class AbstractEndpoint<S> {
 
     /**
      * Create the SSLContextfor the the given SSLHostConfig.
-     *
-     * @param sslHostConfig The SSLHostConfig for which the SSLContext should be
-     *                      created
-     * @throws Exception If the SSLContext cannot be created for the given
-     *                   SSLHostConfig
+     * @param sslHostConfig The SSLHostConfig for which the SSLContext should be created
+     * @throws Exception If the SSLContext cannot be created for the given SSLHostConfig
      */
     protected abstract void createSSLContext(SSLHostConfig sslHostConfig) throws Exception;
-
 
     protected void destroySsl() throws Exception {
         if (isSSLEnabled()) {
@@ -1177,7 +1165,6 @@ public abstract class AbstractEndpoint<S> {
     protected final void startAcceptorThreads() {
         int count = getAcceptorThreadCount();
         acceptors = new Acceptor[count];
-
         for (int i = 0; i < count; i++) {
             acceptors[i] = createAcceptor();
             String threadName = getName() + "-Acceptor-" + i;
